@@ -1,14 +1,36 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      緊急連絡アプリ
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-list>
+    <ion-list-header>
+      加速度
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>x</ion-label>
+      <ion-note item-end>{{ acceleration.x | number : '1.2-2' }}</ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label>y</ion-label>
+      <ion-note item-end>{{ acceleration.y | number : '1.2-2' }}</ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label>z</ion-label>
+      <ion-note item-end>{{ acceleration.z | number : '1.2-2' }}</ion-note>
+    </ion-item>
+    <ion-item [class.moved]="moved">
+      <ion-label>sqrt(x * x + y * y + z * z)</ion-label>
+      <ion-note item-end>{{ vector | number : '1.2-2' }}</ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label>timestamp</ion-label>
+      <ion-note item-end>{{ acceleration.timestamp }}</ion-note>
+    </ion-item>
+  </ion-list>
 </ion-content>
