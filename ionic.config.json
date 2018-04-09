@@ -1,0 +1,8 @@
+{
+  "name": "forestry-emergency-reporter",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
