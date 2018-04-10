@@ -8,20 +8,32 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 })
 export class HomePage {
   acceleration: DeviceMotionAccelerationData;
-  vector: number;
-  moved: boolean;
   subscription: any;
+  lastMoved: any;
   constructor(public navCtrl: NavController, public platform: Platform, private deviceMotion: DeviceMotion) {
-    this.acceleration = {x: 0, y: 0, z: 0, timestamp: null};
-    this.vector = 9.8;
-    this.moved = false;
+    this.acceleration = {x: 0, y: 0, z: 0, timestamp: 0};
+    this.lastMoved = Number.MAX_VALUE;
     
     this.platform.ready().then((readySource) => {
       this.subscription = this.deviceMotion.watchAcceleration({frequency: 100}).subscribe((acceleration: DeviceMotionAccelerationData) => {
         this.acceleration = acceleration;
-        this.vector = Math.sqrt(acceleration.x * acceleration.x + acceleration.y * acceleration.y + acceleration.z * acceleration.z);
-        this.moved = this.vector < 9.4 || 10.2 < this.vector;
+        if (this.moved) {
+          this.lastMoved = this.acceleration.timestamp;
+        }
       });
     })
   };
+
+  get vector(): number {
+    return Math.sqrt(this.acceleration.x * this.acceleration.x + this.acceleration.y * this.acceleration.y + this.acceleration.z * this.acceleration.z);
+  }
+
+  get moved(): boolean {
+    return this.vector < 9.4 || 10.2 < this.vector;
+  }
+
+  get steadyDuration(): number {
+    return Math.max(this.acceleration.timestamp - this.lastMoved, 0);
+  }
+
 }
