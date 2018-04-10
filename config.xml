@@ -84,4 +84,5 @@
     <plugin name="cordova-plugin-device-motion" spec="^1.2.5" />
     <engine name="ios" spec="~4.5.4" />
     <plugin name="cordova-plugin-nativeaudio" spec="^3.0.9" />
+    <engine name="android" spec="~7.0.0" />
 </widget>
