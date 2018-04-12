@@ -10,6 +10,8 @@ import { NativeAudio } from '@ionic-native/native-audio'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { MotionProvider } from '../providers/motion/motion';
+import { AudioProvider } from '../providers/audio/audio';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { HomePage } from '../pages/home/home';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DeviceMotion,
-    NativeAudio
+    NativeAudio,
+    MotionProvider,
+    AudioProvider
   ]
 })
 export class AppModule {}
