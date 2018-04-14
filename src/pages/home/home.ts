@@ -25,6 +25,7 @@ export class HomePage {
     this.alertCtrl.create({
       title: '通報中',
       message: '現在、事務所に救護要請しています。',
+      enableBackdropDismiss: false,
       buttons: [
         {
           text: '取り消し',

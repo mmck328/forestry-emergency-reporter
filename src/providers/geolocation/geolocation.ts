@@ -10,10 +10,10 @@ import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocati
 */
 const config: BackgroundGeolocationConfig = {
   desiredAccuracy: 10,
-  stationaryRadius: 20,
+  stationaryRadius: 30,
   distanceFilter: 30,
   debug: true,
-  stopOnTerminate: false
+  stopOnTerminate: true
 };
 
 @Injectable()

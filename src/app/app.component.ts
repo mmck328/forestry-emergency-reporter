@@ -20,7 +20,7 @@ export class MyApp {
       backgroundMode.enable();
       if (platform.is('android')) {
         backgroundMode.excludeFromTaskList();
-        backgroundMode.overrideBackButton();
+        platform.registerBackButtonAction(() => backgroundMode.moveToBackground());
       }
     });
   }
