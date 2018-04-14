@@ -25,7 +25,7 @@ export class GeolocationProvider {
       this.backgroundGeolocation.configure(config).subscribe((location: BackgroundGeolocationResponse) => {
         this.location = location;
         console.log(JSON.stringify(location));
-        this.backgroundGeolocation.finish().then().catch();
+        this.backgroundGeolocation.finish().then().catch((err) => console.log(err));
       });
       this.backgroundGeolocation.start();
     });
