@@ -32,4 +32,26 @@
       <ion-note item-end>{{ motionProvider.steadyDuration }}</ion-note>
     </ion-item>
   </ion-list>
+  <ion-list>
+    <ion-list-header>
+      位置情報
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Service Provider</ion-label>
+      <ion-note item-end>{{ geolocationProvider.location.serviceProvider }}</ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label>緯度</ion-label>
+      <ion-note item-end>{{ geolocationProvider.location.latitude }}</ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label>経度</ion-label>
+      <ion-note item-end>{{ geolocationProvider.location.longitude }}</ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label>精度 [m]</ion-label>
+      <ion-note item-end>{{ geolocationProvider.location.accuracy }}</ion-note>
+    </ion-item>
+    
+  </ion-list>
 </ion-content>

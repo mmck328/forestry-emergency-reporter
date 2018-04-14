@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, Platform, Events } from 'ionic-angular';
 import { MotionProvider } from '../../providers/motion/motion';
 import { AudioProvider } from '../../providers/audio/audio';
+import { GeolocationProvider } from '../../providers/geolocation/geolocation'
 
 @Component({
   selector: 'page-home',
@@ -9,7 +10,7 @@ import { AudioProvider } from '../../providers/audio/audio';
 })
 export class HomePage {
   alarting: boolean;
-  constructor(public navCtrl: NavController, public platform: Platform, public events: Events, private motionProvider: MotionProvider, private audioProvider: AudioProvider) {
+  constructor(public navCtrl: NavController, public platform: Platform, public events: Events, private motionProvider: MotionProvider, private audioProvider: AudioProvider, private geolocationProvider: GeolocationProvider) {
     this.events.subscribe('motion:updated', () => this.onMotionUpdated())
   };
 

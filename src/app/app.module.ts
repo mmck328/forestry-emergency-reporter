@@ -6,12 +6,13 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { DeviceMotion } from '@ionic-native/device-motion'
 import { NativeAudio } from '@ionic-native/native-audio'
-
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MotionProvider } from '../providers/motion/motion';
 import { AudioProvider } from '../providers/audio/audio';
+import { GeolocationProvider } from '../providers/geolocation/geolocation';
 
 @NgModule({
   declarations: [
@@ -33,8 +34,10 @@ import { AudioProvider } from '../providers/audio/audio';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DeviceMotion,
     NativeAudio,
+    BackgroundGeolocation,
     MotionProvider,
-    AudioProvider
+    AudioProvider,
+    GeolocationProvider
   ]
 })
 export class AppModule {}
