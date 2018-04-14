@@ -15,24 +15,30 @@ export class AudioProvider {
   constructor(public platform: Platform, private nativeAudio: NativeAudio) {
     this.platform.ready()
     .then(() => {
-      this.nativeAudio.unload('alart')
+      Promise.all([
+        this.nativeAudio.unload('alert'), 
+        this.nativeAudio.unload('report')
+      ])
       .catch((err) => console.log('[AudioProvider] nativeAudio.unload: ' + err))
-      .then(() => this.nativeAudio.preloadComplex('alart', 'assets/audio/alart.mp3', 1, 1, 0))
+      .then(() => Promise.all([
+        this.nativeAudio.preloadComplex('alert', 'assets/audio/alert.mp3', 1, 1, 0),
+        this.nativeAudio.preloadComplex('report', 'assets/audio/report.aac', 1, 1, 0)
+      ]))
       .then(() => this.audioLoaded = true)
       .catch((err) => console.log('[AudioProvider] nativeAudio.preloadComplex: ' + err));
     })
     .catch((err) => console.log(err));
   }
 
-  ring(): void {
+  loop(id: string): void {
     if (this.audioLoaded) {
-      this.nativeAudio.loop('alart').then().catch((err) => console.log('[AudioProvider] nativeAudio.loop: ' + err));
+      this.nativeAudio.loop(id).then().catch((err) => console.log('[AudioProvider] nativeAudio.loop: ' + err));
     }
   }
 
-  stop(): void {
+  stop(id: string): void {
     if (this.audioLoaded) {
-      this.nativeAudio.stop('alart').then().catch((err) => console.log('[AudioProvider] nativeAudio.stop: ' + err));
+      this.nativeAudio.stop(id).then().catch((err) => console.log('[AudioProvider] nativeAudio.stop: ' + err));
     }
   }
 }
