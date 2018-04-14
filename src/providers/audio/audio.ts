@@ -20,13 +20,13 @@ export class AudioProvider {
 
   ring(): void {
     if (this.audioLoaded) {
-      this.nativeAudio.loop('alart').then().catch((err) => console.log(err));
+      this.nativeAudio.loop('alart').then().catch((err) => console.log('[nativeAudio.loop] ' + err));
     }
   }
 
   stop(): void {
     if (this.audioLoaded) {
-      this.nativeAudio.stop('alart').then().catch((err) => console.log(err));
+      this.nativeAudio.stop('alart').then().catch((err) => console.log('[nativeAudio.stop] ' + err));
     }
   }
 }
