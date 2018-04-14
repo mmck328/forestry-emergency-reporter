@@ -8,6 +8,7 @@ import { DeviceMotion } from '@ionic-native/device-motion';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { BackgroundMode } from '@ionic-native/background-mode';
+import { BLE } from '@ionic-native/ble'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -37,6 +38,7 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
     NativeAudio,
     BackgroundGeolocation,
     BackgroundMode,
+    BLE,
     MotionProvider,
     AudioProvider,
     GeolocationProvider
