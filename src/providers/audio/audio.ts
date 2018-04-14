@@ -13,20 +13,26 @@ export class AudioProvider {
   private audioLoaded: boolean;
 
   constructor(public platform: Platform, private nativeAudio: NativeAudio) {
-    this.platform.ready().then((readySource) => {
-      this.nativeAudio.preloadComplex('alart', 'assets/audio/alart.mp3', 1, 1, 0).then(() => this.audioLoaded = true).catch((err) => console.log(err))
-    }).catch((err) => console.log(err));
+    this.platform.ready()
+    .then(() => {
+      this.nativeAudio.unload('alart')
+      .catch((err) => console.log('[AudioProvider] nativeAudio.unload: ' + err))
+      .then(() => this.nativeAudio.preloadComplex('alart', 'assets/audio/alart.mp3', 1, 1, 0))
+      .then(() => this.audioLoaded = true)
+      .catch((err) => console.log('[AudioProvider] nativeAudio.preloadComplex: ' + err));
+    })
+    .catch((err) => console.log(err));
   }
 
   ring(): void {
     if (this.audioLoaded) {
-      this.nativeAudio.loop('alart').then().catch((err) => console.log('[nativeAudio.loop] ' + err));
+      this.nativeAudio.loop('alart').then().catch((err) => console.log('[AudioProvider] nativeAudio.loop: ' + err));
     }
   }
 
   stop(): void {
     if (this.audioLoaded) {
-      this.nativeAudio.stop('alart').then().catch((err) => console.log('[nativeAudio.stop] ' + err));
+      this.nativeAudio.stop('alart').then().catch((err) => console.log('[AudioProvider] nativeAudio.stop: ' + err));
     }
   }
 }

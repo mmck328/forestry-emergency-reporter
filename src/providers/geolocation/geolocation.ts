@@ -25,7 +25,9 @@ export class GeolocationProvider {
       this.backgroundGeolocation.configure(config).subscribe((location: BackgroundGeolocationResponse) => {
         this.location = location;
         console.log(JSON.stringify(location));
-        this.backgroundGeolocation.finish().then().catch((err) => console.log('[backgroundGeolocation.finish] ' + err));
+        if (this.platform.is('ios')) {
+          this.backgroundGeolocation.finish().then().catch((err) => console.log('[backgroundGeolocation.finish] ' + err));
+        }
       });
       this.backgroundGeolocation.start();
     });
