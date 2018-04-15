@@ -3,6 +3,7 @@ import { NavController, Platform, Events, AlertController } from 'ionic-angular'
 import { MotionProvider } from '../../providers/motion/motion';
 import { AudioProvider } from '../../providers/audio/audio';
 import { GeolocationProvider } from '../../providers/geolocation/geolocation'
+import { CommunicationProvider } from '../../providers/communication/communication';
 
 enum State {
   Normal,
@@ -16,7 +17,7 @@ enum State {
 })
 export class HomePage {
   state: State;
-  constructor(public navCtrl: NavController, public platform: Platform, public events: Events, private alertCtrl: AlertController, private motionProvider: MotionProvider, private audioProvider: AudioProvider, private geolocationProvider: GeolocationProvider) {
+  constructor(public navCtrl: NavController, public platform: Platform, public events: Events, private alertCtrl: AlertController, private motionProvider: MotionProvider, private audioProvider: AudioProvider, private geolocationProvider: GeolocationProvider, private communicationProvider: CommunicationProvider) {
     this.state = State.Normal;
     this.events.subscribe('motion:updated', () => this.onMotionUpdated());
   };

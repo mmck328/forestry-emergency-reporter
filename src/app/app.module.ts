@@ -15,6 +15,7 @@ import { HomePage } from '../pages/home/home';
 import { MotionProvider } from '../providers/motion/motion';
 import { AudioProvider } from '../providers/audio/audio';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
+import { CommunicationProvider } from '../providers/communication/communication';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
     BLE,
     MotionProvider,
     AudioProvider,
-    GeolocationProvider
+    GeolocationProvider,
+    CommunicationProvider
   ]
 })
 export class AppModule {}

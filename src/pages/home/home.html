@@ -9,6 +9,20 @@
 <ion-content padding>
   <ion-list>
     <ion-list-header>
+      通信
+    </ion-list-header>
+    <ion-item>
+      <ion-label>
+        BLE-LoRa GWから
+      </ion-label>
+      <ion-note item-end>
+        {{ communicationProvider.received }}
+      </ion-note>
+    </ion-item>
+  </ion-list>
+  
+  <ion-list>
+    <ion-list-header>
       加速度
     </ion-list-header>
     <ion-item [class.moved]="motionProvider.moved">
@@ -20,6 +34,7 @@
       <ion-note item-end>{{ motionProvider.steadyDuration }}</ion-note>
     </ion-item>
   </ion-list>
+  
   <ion-list>
     <ion-list-header>
       位置情報
