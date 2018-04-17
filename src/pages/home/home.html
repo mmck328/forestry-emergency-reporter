@@ -49,19 +49,19 @@
     </ion-list-header>
     <ion-item>
       <ion-label>緯度</ion-label>
-      <ion-note item-end>{{ geolocationProvider.location.latitude }}</ion-note>
+      <ion-note item-end>{{ geolocProvider.location.latitude }}</ion-note>
     </ion-item>
     <ion-item>
       <ion-label>経度</ion-label>
-      <ion-note item-end>{{ geolocationProvider.location.longitude }}</ion-note>
+      <ion-note item-end>{{ geolocProvider.location.longitude }}</ion-note>
     </ion-item>
     <ion-item>
       <ion-label>精度 [m]</ion-label>
-      <ion-note item-end>{{ geolocationProvider.location.accuracy }}</ion-note>
+      <ion-note item-end>{{ geolocProvider.location.accuracy }}</ion-note>
     </ion-item>
     <ion-item>
       <ion-label>測位手法</ion-label>
-      <ion-note item-end>{{ geolocationProvider.location.provider }}</ion-note>
+      <ion-note item-end>{{ geolocProvider.location.provider }}</ion-note>
     </ion-item>    
   </ion-list>
 </ion-content>

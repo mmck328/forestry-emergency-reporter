@@ -14,6 +14,7 @@ export class CommunicationProvider {
   private receivedCharacteristicId: string = '7F5D2112-0B9F-4188-9C4D-6AC4C161EC81';
   private sendCharacteristicId: string = '3D161CC8-CFE4-4948-B582-672386BB41AB';
   private gw: any;
+  private interval: any;
   public received: string = '';
   public connected: boolean = false;
   constructor(public platform: Platform, private ble: BLE) {
@@ -39,24 +40,22 @@ export class CommunicationProvider {
   connect(): void {
     this.ble.connect(this.gw.id).subscribe(
       (connect) => {
-        console.log('[CommunicationProvider] connected: ' + connect);
+        console.log('[CommunicationProvider] connected: ' + JSON.stringify(connect));
         this.onConnected();
       },
       (disconnect) => {
-        console.log('[CommunicationProvider] disconnected: ' + disconnect);
+        console.log('[CommunicationProvider] disconnected: ' + JSON.stringify(disconnect));
         this.onDisconnected();
       });
   }
 
-  send(value): void {
+  send(value: string): void {
     let enc = new TextEncoder();
     if (this.connected) {
       this.ble.write(this.gw.id, this.serviceId, this.sendCharacteristicId, enc.encode(value).buffer).catch()
+    } else {
+      console.log('[CommunicationProvider] send: Failed with no connection');
     }
-  }
-
-  sendState(): void {
-    
   }
 
   onConnected(): void {
@@ -73,6 +72,7 @@ export class CommunicationProvider {
 
   onDisconnected(): void {
     this.connected = false;
+    clearInterval(this.interval);
     this.scan();
   }
 }

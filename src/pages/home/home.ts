@@ -11,7 +11,7 @@ import { StateProvider } from '../../providers/state/state'
   templateUrl: 'home.html'
 })
 export class HomePage {
-  constructor(public navCtrl: NavController, private motionProvider: MotionProvider, private geolocationProvider: GeolocationProvider, private comProvider: CommunicationProvider, private stateProvider: StateProvider) {
+  constructor(public navCtrl: NavController, private motionProvider: MotionProvider, private geolocProvider: GeolocationProvider, private comProvider: CommunicationProvider, private stateProvider: StateProvider) {
 
   };
 
