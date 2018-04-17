@@ -13,10 +13,18 @@
     </ion-list-header>
     <ion-item>
       <ion-label>
-        BLE-LoRa GWから
+        BLE-LoRa GW
       </ion-label>
       <ion-note item-end>
-        {{ communicationProvider.received }}
+        {{ comProvider.connected ? '接続中' : '未接続' }}
+      </ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        受信メッセージ
+      </ion-label>
+      <ion-note item-end>
+        {{ comProvider.received }}
       </ion-note>
     </ion-item>
   </ion-list>

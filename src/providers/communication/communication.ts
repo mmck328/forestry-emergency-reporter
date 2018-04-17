@@ -11,9 +11,11 @@ import { BLE } from '@ionic-native/ble';
 @Injectable()
 export class CommunicationProvider {
   private serviceId: string = '17CF6671-7A8C-4DDD-9547-4BFA6D3F1C49';
-  private stringCharacteristicId: string = '2a3d';
+  private receivedCharacteristicId: string = '7F5D2112-0B9F-4188-9C4D-6AC4C161EC81';
+  private sendCharacteristicId: string = '3D161CC8-CFE4-4948-B582-672386BB41AB';
   private gw: any;
   public received: string = '';
+  public connected: boolean = false;
   constructor(public platform: Platform, private ble: BLE) {
     this.platform.ready().then(() => {
       this.scan();
@@ -42,12 +44,20 @@ export class CommunicationProvider {
       },
       (disconnect) => {
         console.log('[CommunicationProvider] disconnected: ' + disconnect);
-        this.scan();
+        this.onDisconnected();
       });
   }
 
+  send(value): void {
+    let enc = new TextEncoder();
+    if (this.connected) {
+      this.ble.write(this.gw.id, this.serviceId, this.sendCharacteristicId, enc.encode(value).buffer).catch()
+    }
+  }
+
   onConnected(): void {
-    this.ble.startNotification(this.gw.id, this.serviceId, this.stringCharacteristicId).subscribe(
+    this.connected = true;
+    this.ble.startNotification(this.gw.id, this.serviceId, this.receivedCharacteristicId).subscribe(
       (newValue) => {
         let dec = new TextDecoder();
         this.received = dec.decode(new Uint8Array(newValue));
@@ -55,5 +65,10 @@ export class CommunicationProvider {
       },
       (error) => console.log(error)
     );
+  }
+
+  onDisconnected(): void {
+    this.connected = false;
+    this.scan();
   }
 }

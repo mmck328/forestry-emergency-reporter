@@ -17,7 +17,7 @@ enum State {
 })
 export class HomePage {
   state: State;
-  constructor(public navCtrl: NavController, public platform: Platform, public events: Events, private alertCtrl: AlertController, private motionProvider: MotionProvider, private audioProvider: AudioProvider, private geolocationProvider: GeolocationProvider, private communicationProvider: CommunicationProvider) {
+  constructor(public navCtrl: NavController, public platform: Platform, public events: Events, private alertCtrl: AlertController, private motionProvider: MotionProvider, private audioProvider: AudioProvider, private geolocationProvider: GeolocationProvider, private comProvider: CommunicationProvider) {
     this.state = State.Normal;
     this.events.subscribe('motion:updated', () => this.onMotionUpdated());
   };
@@ -38,6 +38,7 @@ export class HomePage {
   }
 
   startReporting(): void {
+    this.comProvider.send("要確認！");
     this.audioProvider.stop('alert');
     this.audioProvider.loop('report');
     this.state = State.Reporting;
