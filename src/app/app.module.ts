@@ -16,6 +16,7 @@ import { MotionProvider } from '../providers/motion/motion';
 import { AudioProvider } from '../providers/audio/audio';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
 import { CommunicationProvider } from '../providers/communication/communication';
+import { StateProvider } from '../providers/state/state';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { CommunicationProvider } from '../providers/communication/communication'
     MotionProvider,
     AudioProvider,
     GeolocationProvider,
-    CommunicationProvider
+    CommunicationProvider,
+    StateProvider
   ]
 })
 export class AppModule {}

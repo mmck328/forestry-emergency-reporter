@@ -55,6 +55,10 @@ export class CommunicationProvider {
     }
   }
 
+  sendState(): void {
+    
+  }
+
   onConnected(): void {
     this.connected = true;
     this.ble.startNotification(this.gw.id, this.serviceId, this.receivedCharacteristicId).subscribe(
