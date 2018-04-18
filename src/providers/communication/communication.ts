@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, AlertController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
 
 /*
@@ -17,17 +17,53 @@ export class CommunicationProvider {
   private interval: any;
   public received: string = '';
   public connected: boolean = false;
-  constructor(public platform: Platform, private ble: BLE) {
+  constructor(public platform: Platform, private ble: BLE, private alertCtrl: AlertController) {
     this.platform.ready().then(() => {
       this.scan();
     });
   }
 
   scan(): void {
-    this.ble.startScan([this.serviceId]).subscribe(
-      (device) => this.onDeviceDiscovered(device),
-      (error) => console.log(error)
-    );
+    this.ble.isEnabled()
+    .then(() => {
+      this.ble.startScan([this.serviceId]).subscribe(
+        (device) => this.onDeviceDiscovered(device),
+        (error) => console.log(error)
+      );
+    })
+    .catch(() => {
+      if (this.platform.is('android')) {
+        this.alertCtrl.create({
+          title: 'Bluetooth',
+          message: 'Bluetoothを有効化してください。',
+          enableBackdropDismiss: false,
+          buttons: [
+            {
+              text: 'OK',
+              handler: () => { 
+                this.ble.enable()
+                .then(() => this.scan())
+                .catch(() => this.scan())
+              }
+            }
+          ]
+        }).present();
+      } else {
+        this.alertCtrl.create({
+          title: 'Bluetooth',
+          message: 'Bluetoothを有効化してください。',
+          enableBackdropDismiss: false,
+          buttons: [
+            {
+              text: 'OK',
+              handler: () => { 
+                setTimeout(() => this.scan(), 30 * 1000)
+              }
+            }
+          ]
+        }).present();     
+      }
+    })
   }
 
   onDeviceDiscovered(device): void {

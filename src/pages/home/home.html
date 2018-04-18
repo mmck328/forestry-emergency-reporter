@@ -29,7 +29,7 @@
       <ion-label>
         BLE-LoRa GW
       </ion-label>
-      <ion-note item-end>
+      <ion-note [class.connected]="comProvider.connected" [class.disconnected]="!comProvider.connected" item-end>
         {{ comProvider.connected ? '接続中' : '未接続' }}
       </ion-note>
     </ion-item>
