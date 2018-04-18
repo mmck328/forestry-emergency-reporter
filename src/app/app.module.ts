@@ -9,6 +9,7 @@ import { NativeAudio } from '@ionic-native/native-audio';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { BLE } from '@ionic-native/ble'
+import { NativeStorage } from '@ionic-native/native-storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -17,6 +18,7 @@ import { AudioProvider } from '../providers/audio/audio';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
 import { CommunicationProvider } from '../providers/communication/communication';
 import { StateProvider } from '../providers/state/state';
+import { UserProvider } from '../providers/user/user';
 
 @NgModule({
   declarations: [
@@ -41,11 +43,14 @@ import { StateProvider } from '../providers/state/state';
     BackgroundGeolocation,
     BackgroundMode,
     BLE,
+    NativeStorage,
     MotionProvider,
     AudioProvider,
     GeolocationProvider,
     CommunicationProvider,
-    StateProvider
+    StateProvider,
+    UserProvider,
+    UserProvider
   ]
 })
 export class AppModule {}

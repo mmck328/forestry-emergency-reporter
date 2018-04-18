@@ -5,6 +5,7 @@ import { MotionProvider } from '../motion/motion';
 import { AudioProvider } from '../audio/audio';
 import { CommunicationProvider } from '../communication/communication';
 import { GeolocationProvider } from '../geolocation/geolocation';
+import { UserProvider } from '../user/user';
 
 /*
   Generated class for the StateProvider provider.
@@ -22,7 +23,7 @@ enum State {
 export class StateProvider {
   public state: State = State.Normal;
   private interval: number = null;
-  constructor(public platform: Platform, public events: Events, private alertCtrl: AlertController, private motionProvider: MotionProvider, private audioProvider: AudioProvider, private geolocProvider: GeolocationProvider, private comProvider: CommunicationProvider) {
+  constructor(public platform: Platform, public events: Events, private alertCtrl: AlertController, private motionProvider: MotionProvider, private audioProvider: AudioProvider, private geolocProvider: GeolocationProvider, private comProvider: CommunicationProvider, private userProvider: UserProvider) {
     this.events.subscribe('motion:updated', () => this.onMotionUpdated());
     setTimeout(() => {
       this.interval = setInterval(() => this.sendInfo(), 60 * 1000);
@@ -31,7 +32,7 @@ export class StateProvider {
 
   sendInfo(): void {
     let type = '0' // upstream
-    let id = '00' // dummy
+    let id = this.userProvider.username;
     let lat = new DecimalPipe('en-US').transform(this.geolocProvider.location.latitude, '2.5-5');
     if (lat.indexOf('-') < 0) {
       lat = '+' + lat

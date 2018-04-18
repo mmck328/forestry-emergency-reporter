@@ -8,6 +8,20 @@
 
 <ion-content padding>
   <ion-list>
+      <ion-list-header>
+        設定
+      </ion-list-header>
+      <ion-item>
+        <ion-label>
+          作業者ID
+        </ion-label>
+        <ion-select #selectuser (ionChange)="userProvider.onChange($event)" [(ngModel)]="userProvider.username">
+          <ion-option *ngFor="let op of userProvider.users" [value]="op">{{ op }}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    
+  <ion-list>
     <ion-list-header>
       通信
     </ion-list-header>
