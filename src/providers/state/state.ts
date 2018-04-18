@@ -16,7 +16,8 @@ import { UserProvider } from '../user/user';
 enum State {
   Normal,
   Alerting,
-  Reporting
+  Reporting,
+  Calling
 }
 
 @Injectable()
@@ -30,6 +31,17 @@ export class StateProvider {
     }, 60 * 1000 - Date.now() % (60 * 1000));
   };
 
+
+  statusString(): string {
+    if (this.state === State.Calling) {
+      return '2';
+    } else if (this.state === State.Reporting) {
+      return '1';
+    } else {
+      return '0';
+    }
+  }
+
   sendInfo(): void {
     let type = '0' // upstream
     let id = this.userProvider.username;
@@ -41,17 +53,18 @@ export class StateProvider {
     if (lng.indexOf('-') < 0) {
       lng = '+' + lng
     }
-    let status = (this.state === State.Reporting ? '1' : '0');
+    let status = this.statusString();
     let timestamp = Date.now();
     let infoString = type + id + lat + lng + status + timestamp;
     console.log('sendInfo: ' + infoString);
     this.comProvider.send(infoString);
   }
 
+
   presentReportingAlert(): void {
     this.alertCtrl.create({
-      title: '通報中',
-      message: '現在、事務所に救護要請しています。',
+      title: '報告中',
+      message: '現在、事務所に確認依頼しています。',
       enableBackdropDismiss: false,
       buttons: [
         {
@@ -74,7 +87,58 @@ export class StateProvider {
   stopReporting(): void {
     this.state = State.Normal;
     this.audioProvider.stop('report');
+    this.sendInfo();
   }
+
+
+  call(): void {
+    this.alertCtrl.create({
+      title: '通報しますか？',
+      message: '事務所に救護要請をします。',
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: 'キャンセル',
+          role: 'cancel',
+          handler: () => {}
+        }, 
+        {
+          text: 'OK',
+          handler: () => this.startCalling()
+        }
+      ]
+    }).present();
+  }
+
+  presentCallingAlert(): void {
+    this.alertCtrl.create({
+      title: '通報中',
+      message: '現在、事務所に救護要請しています。',
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: '取り消し',
+          role: 'cancel',
+          handler: () => this.stopCalling()
+        }
+      ]
+    }).present();
+  }
+
+  startCalling(): void {
+    this.audioProvider.stop('alert');
+    this.audioProvider.loop('call');
+    this.state = State.Calling;
+    this.sendInfo();
+    this.presentCallingAlert();
+  }
+
+  stopCalling(): void {
+    this.state = State.Normal;
+    this.audioProvider.stop('call');
+    this.sendInfo();
+  }
+
 
   onMotionUpdated(): void {
     if (this.state == State.Alerting && this.motionProvider.steadyDuration > 20000) {

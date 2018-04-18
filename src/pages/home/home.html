@@ -1,26 +1,30 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      緊急連絡アプリ
+      RingRing
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
-      <ion-list-header>
-        設定
-      </ion-list-header>
-      <ion-item>
-        <ion-label>
-          作業者ID
-        </ion-label>
-        <ion-select #selectuser (ionChange)="userProvider.onChange($event)" [(ngModel)]="userProvider.username">
-          <ion-option *ngFor="let op of userProvider.users" [value]="op">{{ op }}</ion-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
-    
+    <ion-list-header>
+      設定
+    </ion-list-header>
+    <ion-item>
+      <ion-label>
+        作業者ID
+      </ion-label>
+      <ion-select #selectuser (ionChange)="userProvider.onChange($event)" [(ngModel)]="userProvider.username">
+        <ion-option *ngFor="let op of userProvider.users" [value]="op">{{ op }}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  
+  <ion-grid align-items-center>
+    <button ion-button round large color="danger" (click)="stateProvider.call()">通報</button>
+  </ion-grid>
+
   <ion-list>
     <ion-list-header>
       通信

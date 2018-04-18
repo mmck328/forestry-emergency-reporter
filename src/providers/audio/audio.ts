@@ -17,12 +17,14 @@ export class AudioProvider {
     .then(() => {
       Promise.all([
         this.nativeAudio.unload('alert'), 
-        this.nativeAudio.unload('report')
+        this.nativeAudio.unload('report'),
+        this.nativeAudio.unload('call')
       ])
       .catch((err) => console.log('[AudioProvider] nativeAudio.unload: ' + err))
       .then(() => Promise.all([
         this.nativeAudio.preloadComplex('alert', 'assets/audio/alert.mp3', 1, 1, 0),
-        this.nativeAudio.preloadComplex('report', 'assets/audio/report.aac', 1, 1, 0)
+        this.nativeAudio.preloadComplex('report', 'assets/audio/report.aac', 1, 1, 0),
+        this.nativeAudio.preloadComplex('call', 'assets/audio/call.aac', 1, 1, 0)
       ]))
       .then(() => this.audioLoaded = true)
       .catch((err) => console.log('[AudioProvider] nativeAudio.preloadComplex: ' + err));
