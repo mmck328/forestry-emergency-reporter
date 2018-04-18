@@ -52,9 +52,12 @@ export class CommunicationProvider {
   send(value: string): void {
     let enc = new TextEncoder();
     if (this.connected) {
-      this.ble.write(this.gw.id, this.serviceId, this.sendCharacteristicId, enc.encode(value).buffer).catch()
+      this.ble.write(this.gw.id, this.serviceId, this.sendCharacteristicId, enc.encode(value).buffer)
+      .catch((err) => {
+        console.log('[CommunicationProvider] send failed: ' + err)
+      });
     } else {
-      console.log('[CommunicationProvider] send: Failed with no connection');
+      console.log('[CommunicationProvider] send failed with no connection');
     }
   }
 
