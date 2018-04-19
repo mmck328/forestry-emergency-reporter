@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Platform, AlertController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 /*
   Generated class for the CommunicationProvider provider.
@@ -17,7 +18,7 @@ export class CommunicationProvider {
   private interval: any;
   public received: string = '';
   public connected: boolean = false;
-  constructor(public platform: Platform, private ble: BLE, private alertCtrl: AlertController) {
+  constructor(public platform: Platform, private ble: BLE, private localNotifications: LocalNotifications, private alertCtrl: AlertController) {
     this.platform.ready().then(() => {
       this.scan();
     });
@@ -103,7 +104,13 @@ export class CommunicationProvider {
       (newValue) => {
         let dec = new TextDecoder();
         this.received = dec.decode(new Uint8Array(newValue));
-        console.log(this.received)
+        console.log('[CommunicationProvider] Received: ' + this.received);
+
+        this.localNotifications.schedule({
+          id: 1,
+          text: 'メッセージを受信：' + this.received,
+          data: { message: this.received }
+        });
       },
       (error) => console.log(error)
     );
