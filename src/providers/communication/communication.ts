@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Platform, AlertController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { UserProvider } from '../user/user';
 
 /*
   Generated class for the CommunicationProvider provider.
@@ -18,10 +19,28 @@ export class CommunicationProvider {
   private interval: any;
   public received: string = '';
   public connected: boolean = false;
-  constructor(public platform: Platform, private ble: BLE, private localNotifications: LocalNotifications, private alertCtrl: AlertController) {
+  constructor(public platform: Platform, private ble: BLE, private localNotifications: LocalNotifications, private alertCtrl: AlertController, private userProvider: UserProvider) {
     this.platform.ready().then(() => {
       this.scan();
     });
+  }
+
+  get receivedLocation() {
+    if (this.received.length >= 14 && this.received.substr(1, 2) === this.userProvider.username) {
+      let lat = Number('33.' + this.received.substr(4, 5));
+      let lng = Number('133.' + this.received.substr(9, 5));
+      return {latitude: lat, longitude: lng};
+    } else {
+      return null;
+    }
+  }
+
+  get receivedMessage(): string {
+    if (this.received.length >= 14 && this.received.substr(1, 2) === this.userProvider.username) {
+      return this.received.slice(14);
+    } else {
+      return null;
+    }
   }
 
   scan(): void {

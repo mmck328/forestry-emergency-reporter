@@ -11,6 +11,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 import { BLE } from '@ionic-native/ble'
 import { NativeStorage } from '@ionic-native/native-storage';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { DeviceOrientation } from '@ionic-native/device-orientation';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -47,6 +48,7 @@ import { CompassProvider } from '../providers/compass/compass';
     BLE,
     NativeStorage,
     LocalNotifications,
+    DeviceOrientation,
     MotionProvider,
     AudioProvider,
     GeolocationProvider,

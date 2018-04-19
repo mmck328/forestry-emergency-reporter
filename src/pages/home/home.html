@@ -13,24 +13,7 @@
     </ion-list-header>
     <ion-item>
       <ion-label>
-        作業者ID
-      </ion-label>
-      <ion-select #selectuser (ionChange)="userProvider.onChange($event)" [(ngModel)]="userProvider.username">
-        <ion-option *ngFor="let op of userProvider.users" [value]="op">{{ op }}</ion-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
-  
-  <ion-grid align-items-center>
-    <button ion-button round large color="danger" (click)="stateProvider.call()">通報</button>
-  </ion-grid>
-
-  <ion-list>
-    <ion-list-header>
-    </ion-list-header>
-    <ion-item>
-      <ion-label>
-        BLE-LoRa GW
+        BLE-LoRa GW 接続状況
       </ion-label>
       <ion-note [class.connected]="comProvider.connected" [class.disconnected]="!comProvider.connected" item-end>
         {{ comProvider.connected ? '接続中' : '未接続' }}
@@ -38,55 +21,92 @@
     </ion-item>
     <ion-item>
       <ion-label>
-        受信メッセージ
+        作業者ID
       </ion-label>
+      <ion-select #selectuser (ionChange)="userProvider.onChange($event)" [(ngModel)]="userProvider.username">
+        <ion-option *ngFor="let op of userProvider.users" [value]="op">{{ op }}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-grid align-items-center>
+    <button ion-button round large color="danger" (click)="stateProvider.call()">通報</button>
+  </ion-grid>
+
+  <ion-list *ngIf="comProvider.receivedLocation">
+    <ion-list-header>
+      確認要請
+    </ion-list-header>
+    <ion-item>
+      <ion-label>方角</ion-label>
       <ion-note item-end>
-        {{ comProvider.received }}
+        {{ compassProvider.calc.degree }}
       </ion-note>
     </ion-item>
     <ion-item>
-      <ion-label>デバイス方向</ion-label>
-      <ion-note>{{ compassProvider.magneticHeading}}</ion-note>
+      <ion-label>距離</ion-label>
+      <ion-note item-end>
+        {{ compassProvider.calc.distance }}
+      </ion-note>
     </ion-item>
     <ion-item>
-      <ion-label>センサー情報</ion-label>
-      <ion-toggle (ionChange)="toggleDescription()"></ion-toggle>
+      <ion-label>
+        メッセージ
+      </ion-label>
+      <ion-note item-end>
+        {{ comProvider.receivedMessage }}
+      </ion-note>
     </ion-item>
   </ion-list>
-  
-  <ion-list *ngIf="showDescription">
+
+  <ion-list>
     <ion-list-header>
-      加速度
+      <div item-start>センサー情報</div>
+      <ion-toggle item-end (ionChange)="toggleDescription()"></ion-toggle>
     </ion-list-header>
-    <ion-item [class.moved]="motionProvider.moved">
-      <ion-label>大きさ</ion-label>
-      <ion-note item-end>{{ motionProvider.magnitude | number : '1.2-2' }}</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-label>静止時間 [ms]</ion-label>
-      <ion-note item-end>{{ motionProvider.steadyDuration }}</ion-note>
-    </ion-item>
-  </ion-list>
-  
-  <ion-list *ngIf="showDescription">
-    <ion-list-header>
-      位置情報
-    </ion-list-header>
-    <ion-item>
-      <ion-label>緯度</ion-label>
-      <ion-note item-end>{{ geolocProvider.location.latitude }}</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-label>経度</ion-label>
-      <ion-note item-end>{{ geolocProvider.location.longitude }}</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-label>精度 [m]</ion-label>
-      <ion-note item-end>{{ geolocProvider.location.accuracy }}</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-label>測位手法</ion-label>
-      <ion-note item-end>{{ geolocProvider.location.provider }}</ion-note>
-    </ion-item>    
+
+    <ion-item-group *ngIf="showDescription">
+      <ion-item-divider>
+        加速度
+      </ion-item-divider>
+      <ion-item [class.moved]="motionProvider.moved">
+        <ion-label>大きさ</ion-label>
+        <ion-note item-end>{{ motionProvider.magnitude | number : '1.2-2' }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>静止時間 [ms]</ion-label>
+        <ion-note item-end>{{ motionProvider.steadyDuration }}</ion-note>
+      </ion-item>
+
+      <ion-item-divider>
+        位置情報
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>緯度</ion-label>
+        <ion-note item-end>{{ geolocProvider.location.latitude }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>経度</ion-label>
+        <ion-note item-end>{{ geolocProvider.location.longitude }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>精度 [m]</ion-label>
+        <ion-note item-end>{{ geolocProvider.location.accuracy }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>測位手法</ion-label>
+        <ion-note item-end>{{ geolocProvider.location.provider }}</ion-note>
+      </ion-item>
+
+      <ion-item-divider>
+        コンパス
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>デバイス方向</ion-label>
+        <ion-note item-end>
+          {{ compassProvider.heading }}
+        </ion-note>
+      </ion-item>
+    </ion-item-group>
   </ion-list>
 </ion-content>

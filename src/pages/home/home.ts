@@ -15,7 +15,7 @@ import { CompassProvider } from '../../providers/compass/compass';
 export class HomePage {
   private showDescription = false;
   @ViewChild('selectuser') select: Select;
-  constructor(public navCtrl: NavController, private motionProvider: MotionProvider, private geolocProvider: GeolocationProvider, private comProvider: CommunicationProvider, private stateProvider: StateProvider, private userProvider: UserProvider, private events: Events, private compass: Compass) {
+  constructor(public navCtrl: NavController, private motionProvider: MotionProvider, private geolocProvider: GeolocationProvider, private comProvider: CommunicationProvider, private stateProvider: StateProvider, private userProvider: UserProvider, private events: Events, private compassProvider: CompassProvider) {
     this.events.subscribe('user:open-select', () => { this.select.open() });
   };
   private toggleDescription(){
