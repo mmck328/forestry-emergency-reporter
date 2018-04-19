@@ -10,6 +10,7 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { BLE } from '@ionic-native/ble'
 import { NativeStorage } from '@ionic-native/native-storage';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -44,6 +45,7 @@ import { UserProvider } from '../providers/user/user';
     BackgroundMode,
     BLE,
     NativeStorage,
+    LocalNotifications,
     MotionProvider,
     AudioProvider,
     GeolocationProvider,
