@@ -20,6 +20,7 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
 import { CommunicationProvider } from '../providers/communication/communication';
 import { StateProvider } from '../providers/state/state';
 import { UserProvider } from '../providers/user/user';
+import { CompassProvider } from '../providers/compass/compass';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { UserProvider } from '../providers/user/user';
     CommunicationProvider,
     StateProvider,
     UserProvider,
-    UserProvider
+    UserProvider,
+    CompassProvider
   ]
 })
 export class AppModule {}

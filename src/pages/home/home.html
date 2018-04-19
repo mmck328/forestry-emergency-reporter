@@ -27,7 +27,6 @@
 
   <ion-list>
     <ion-list-header>
-      通信
     </ion-list-header>
     <ion-item>
       <ion-label>
@@ -45,9 +44,17 @@
         {{ comProvider.received }}
       </ion-note>
     </ion-item>
+    <ion-item>
+      <ion-label>デバイス方向</ion-label>
+      <ion-note>{{ compassProvider.magneticHeading}}</ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label>センサー情報</ion-label>
+      <ion-toggle (ionChange)="toggleDescription()"></ion-toggle>
+    </ion-item>
   </ion-list>
   
-  <ion-list>
+  <ion-list *ngIf="showDescription">
     <ion-list-header>
       加速度
     </ion-list-header>
@@ -61,7 +68,7 @@
     </ion-item>
   </ion-list>
   
-  <ion-list>
+  <ion-list *ngIf="showDescription">
     <ion-list-header>
       位置情報
     </ion-list-header>
