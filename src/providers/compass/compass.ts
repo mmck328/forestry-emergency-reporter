@@ -44,7 +44,7 @@ export class CompassProvider {
 
     let deltax = x2 - x1
     
-    let degree = (this.degrees(Math.atan2(Math.sin(deltax),(Math.cos(y1) * Math.tan(y2) - Math.sin(y1) * Math.cos(deltax)))) + 360) % 360  // 度
+    let degree = (this.degrees(Math.atan2(Math.sin(deltax),(Math.cos(y1) * Math.tan(y2) - Math.sin(y1) * Math.cos(deltax)))) + 360 + 270) % 360  // 度
     let distance = this.r * Math.acos(Math.sin(y1) * Math.sin(y2) + Math.cos(y1) * Math.cos(y2) * Math.cos(deltax)) * 1000 // m
 
     let res = {
