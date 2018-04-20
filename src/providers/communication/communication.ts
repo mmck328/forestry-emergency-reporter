@@ -128,7 +128,7 @@ export class CommunicationProvider {
           console.log('[CommunicationProvider] Received: ' + this.received);
           this.localNotifications.schedule({
             id: 1,
-            text: 'メッセージを受信：' + this.received,
+            text: '[確認要請] 緊急事態が発生した可能性があります。アプリを開いて確認に向かってください。',
             data: { message: this.received }
           });  
         }   
