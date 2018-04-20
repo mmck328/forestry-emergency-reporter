@@ -17,7 +17,7 @@ export class CommunicationProvider {
   private sendCharacteristicId: string = '3D161CC8-CFE4-4948-B582-672386BB41AB';
   private gw: any;
   private interval: any;
-  public received: string = '';
+  public received: string = null;
   public connected: boolean = false;
   constructor(public platform: Platform, private ble: BLE, private localNotifications: LocalNotifications, private alertCtrl: AlertController, private userProvider: UserProvider) {
     this.platform.ready().then(() => {
@@ -26,7 +26,7 @@ export class CommunicationProvider {
   }
 
   get receivedLocation() {
-    if (this.received.length >= 14 && this.received.substr(1, 2) === this.userProvider.username) {
+    if (this.received) {
       let lat = Number('33.' + this.received.substr(4, 5));
       let lng = Number('133.' + this.received.substr(9, 5));
       return {latitude: lat, longitude: lng};
@@ -36,7 +36,7 @@ export class CommunicationProvider {
   }
 
   get receivedMessage(): string {
-    if (this.received.length >= 14 && this.received.substr(1, 2) === this.userProvider.username) {
+    if (this.received) {
       return this.received.slice(14);
     } else {
       return null;
@@ -122,14 +122,16 @@ export class CommunicationProvider {
     this.ble.startNotification(this.gw.id, this.serviceId, this.receivedCharacteristicId).subscribe(
       (newValue) => {
         let dec = new TextDecoder();
-        this.received = dec.decode(new Uint8Array(newValue));
-        console.log('[CommunicationProvider] Received: ' + this.received);
-
-        this.localNotifications.schedule({
-          id: 1,
-          text: 'メッセージを受信：' + this.received,
-          data: { message: this.received }
-        });
+        let newString = dec.decode(new Uint8Array(newValue));
+        if (newString.length >= 14 && newString.substr(1, 2) === this.userProvider.username) {
+          this.received = newString;
+          console.log('[CommunicationProvider] Received: ' + this.received);
+          this.localNotifications.schedule({
+            id: 1,
+            text: 'メッセージを受信：' + this.received,
+            data: { message: this.received }
+          });  
+        }   
       },
       (error) => console.log(error)
     );
